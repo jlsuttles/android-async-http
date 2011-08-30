@@ -31,7 +31,7 @@ public class AsyncHttpRequest implements Runnable {
     protected final AbstractHttpClient client;
     protected final HttpContext context;
     protected final HttpUriRequest request;
-    protected final AsyncHttpResponseHandler responseHandler;
+    public final AsyncHttpResponseHandler responseHandler;
     protected int executionCount;
 
     public AsyncHttpRequest(AbstractHttpClient client, HttpContext context, HttpUriRequest request, AsyncHttpResponseHandler responseHandler) {
