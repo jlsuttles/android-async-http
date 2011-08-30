@@ -28,11 +28,11 @@ import org.apache.http.impl.client.AbstractHttpClient;
 import org.apache.http.protocol.HttpContext;
 
 public class AsyncHttpRequest implements Runnable {
-    private final AbstractHttpClient client;
-    private final HttpContext context;
-    private final HttpUriRequest request;
-    private final AsyncHttpResponseHandler responseHandler;
-    private int executionCount;
+    protected final AbstractHttpClient client;
+    protected final HttpContext context;
+    protected final HttpUriRequest request;
+    protected final AsyncHttpResponseHandler responseHandler;
+    protected int executionCount;
 
     public AsyncHttpRequest(AbstractHttpClient client, HttpContext context, HttpUriRequest request, AsyncHttpResponseHandler responseHandler) {
         this.client = client;
@@ -60,14 +60,14 @@ public class AsyncHttpRequest implements Runnable {
         }
     }
 
-    private void makeRequest() throws IOException {
+    protected void makeRequest() throws IOException {
         HttpResponse response = client.execute(request, context);
         if(responseHandler != null) {
             responseHandler.sendResponseMessage(response);
         }
     }
 
-    private void makeRequestWithRetries() throws ConnectException {
+    protected void makeRequestWithRetries() throws ConnectException {
         // This is an additional layer of retry logic lifted from droid-fu
         // See: https://github.com/kaeppler/droid-fu/blob/master/src/main/java/com/github/droidfu/http/BetterHttpRequestBase.java
         boolean retry = true;

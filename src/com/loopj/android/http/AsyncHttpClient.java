@@ -87,22 +87,22 @@ import android.content.Context;
  * </pre>
  */
 public class AsyncHttpClient {
-    private static final String VERSION = "1.3.1";
+    protected static final String VERSION = "1.3.1";
 
-    private static final int DEFAULT_MAX_CONNECTIONS = 10;
-    private static final int DEFAULT_SOCKET_TIMEOUT = 10 * 1000;
-    private static final int DEFAULT_MAX_RETRIES = 5;
-    private static final String HEADER_ACCEPT_ENCODING = "Accept-Encoding";
-    private static final String ENCODING_GZIP = "gzip";
+    protected static final int DEFAULT_MAX_CONNECTIONS = 10;
+    protected static final int DEFAULT_SOCKET_TIMEOUT = 10 * 1000;
+    protected static final int DEFAULT_MAX_RETRIES = 5;
+    protected static final String HEADER_ACCEPT_ENCODING = "Accept-Encoding";
+    protected static final String ENCODING_GZIP = "gzip";
 
-    private static int maxConnections = DEFAULT_MAX_CONNECTIONS;
-    private static int socketTimeout = DEFAULT_SOCKET_TIMEOUT;
+    protected static int maxConnections = DEFAULT_MAX_CONNECTIONS;
+    protected static int socketTimeout = DEFAULT_SOCKET_TIMEOUT;
 
-    private final DefaultHttpClient httpClient;
-    private final HttpContext httpContext;
-    private ThreadPoolExecutor threadPool;
-    private final Map<Context, List<WeakReference<Future<?>>>> requestMap;
-    private final Map<String, String> clientHeaderMap;
+    protected final DefaultHttpClient httpClient;
+    protected final HttpContext httpContext;
+    protected ThreadPoolExecutor threadPool;
+    protected final Map<Context, List<WeakReference<Future<?>>>> requestMap;
+    protected final Map<String, String> clientHeaderMap;
 
 
     /**
@@ -406,8 +406,8 @@ public class AsyncHttpClient {
 
 
 
-    // Private stuff
-    private void sendRequest(DefaultHttpClient client, HttpContext httpContext, HttpUriRequest uriRequest, String contentType, AsyncHttpResponseHandler responseHandler, Context context) {
+    // protected stuff
+    protected void sendRequest(DefaultHttpClient client, HttpContext httpContext, HttpUriRequest uriRequest, String contentType, AsyncHttpResponseHandler responseHandler, Context context) {
         if(contentType != null) {
             uriRequest.addHeader("Content-Type", contentType);
         }
@@ -428,7 +428,7 @@ public class AsyncHttpClient {
         }
     }
 
-    private String getUrlWithQueryString(String url, RequestParams params) {
+    protected String getUrlWithQueryString(String url, RequestParams params) {
         if(params != null) {
             String paramString = params.getParamString();
             url += "?" + paramString;
@@ -437,7 +437,7 @@ public class AsyncHttpClient {
         return url;
     }
 
-    private HttpEntity paramsToEntity(RequestParams params) {
+    protected HttpEntity paramsToEntity(RequestParams params) {
         HttpEntity entity = null;
 
         if(params != null) {
@@ -447,7 +447,7 @@ public class AsyncHttpClient {
         return entity;
     }
 
-    private HttpEntityEnclosingRequestBase addEntityToRequestBase(HttpEntityEnclosingRequestBase requestBase, HttpEntity entity) {
+    protected HttpEntityEnclosingRequestBase addEntityToRequestBase(HttpEntityEnclosingRequestBase requestBase, HttpEntity entity) {
         if(entity != null){
             requestBase.setEntity(entity);
         }
@@ -455,7 +455,7 @@ public class AsyncHttpClient {
         return requestBase;
     }
 
-    private static class InflatingEntity extends HttpEntityWrapper {
+    protected static class InflatingEntity extends HttpEntityWrapper {
         public InflatingEntity(HttpEntity wrapped) {
             super(wrapped);
         }
